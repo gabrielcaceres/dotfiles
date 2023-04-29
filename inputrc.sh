@@ -5,3 +5,4 @@ set completion-ignore-case on
 
 # display possible completions using different colors to indicate their file type
 set colored-stats on
+set colored-completion-prefix
