@@ -1,10 +1,14 @@
+## TODO figure out what needs to be installed
+## TODO Add logic to check OS
 ## Git status in prompt
-source /usr/share/git-core/contrib/completion/git-prompt.sh
+#source /usr/share/git-core/contrib/completion/git-prompt.sh
 ## import terminal prompt customizations
-source ~/.prompt
+#source ~/.prompt
 
 # set default editor
 export EDITOR=emacs
+
+alias em="emacs"
 
 
 # ## Git status in prompt
@@ -19,21 +23,37 @@ export EDITOR=emacs
 
 
 
-# Color files and folder
-alias ls="ls -GF"
-
-# Other useful aliases
-alias ll="ls -AlF"
-alias la="ls -AlF"
-alias lh="ls -AlFh"
-alias l="ls -CF"
+### ls aliases
+# Relevant flags (see `man ls` for more details):
+# -A : do not list . and ..
+# --color=always : enable colors
+# -d : list only directories, not contents
+# -F : display symbol with additional info for directories or files
+# -g : like -l but don't list owner
+# -h : human readable file size
+# -l : display as list
+# -o : like -l but don't list group
+# -S : sort by size
+# -t : sort by timestamp
+alias ls="ls --color=always -F"	# Default color and label folders
+alias ll="ls -Fhgo"		# List
+alias lla="ll -A"		# List hidden
+alias llt="ll -t"		# List sorted by timestamp
+alias lls="ll -S"		# List sorted by size
+# List only files/directories
 # see: https://unix.stackexchange.com/questions/1645/is-there-any-option-with-ls-command-that-i-see-only-the-directories
-alias lsd="ls -d -- */"
-alias lld="ls -ld -- */"
+alias lsd="ls -d -- */"		# Show only directories
+alias lsf="ls -p | grep -v /"	# Show only files
+alias lld="ll -d -- */"		# List only directories
+alias llf="ll | grep -v /"	# List only files
+alias lltf="llt | grep -v /"	# List only files sorted by timestamp
+alias llsf="lls | grep -v /"	# List only files sorted by size
 
+# Ask when removing many files
+alias rm="rm -I"
+
+# List line conut for file
 alias wcl="wc -l"
-
-alias em="emacs"
 
 
 # function h () {
