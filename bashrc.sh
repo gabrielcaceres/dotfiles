@@ -121,6 +121,7 @@ alias wcl="wc -l"
 # https://formulae.brew.sh/formula/bash-completion@2
 # Linux
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    echo $OSTYPE
     # Linux config
     # Use bash-completion, if available
     # Don't think it's necessary if installed directly using dnf?
@@ -128,6 +129,8 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     # . /usr/share/bash-completion/bash_completion
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     # Mac OSX
+    echo $OSTYPE
 else
     # Unknown.
+    echo "Unknown OS"
 fi
