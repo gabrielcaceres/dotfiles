@@ -115,3 +115,19 @@ alias wcl="wc -l"
 #     source "/usr/local/opt/bash-git-prompt/share/gitprompt.sh"
 # fi
 
+
+# Bash completion
+# https://github.com/scop/bash-completion
+# https://formulae.brew.sh/formula/bash-completion@2
+# Linux
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    # Linux config
+    # Use bash-completion, if available
+    # Don't think it's necessary if installed directly using dnf?
+    # [[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
+    # . /usr/share/bash-completion/bash_completion
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    # Mac OSX
+else
+    # Unknown.
+fi
