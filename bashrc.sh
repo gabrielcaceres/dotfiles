@@ -5,8 +5,9 @@
 ## import terminal prompt customizations
 #source ~/.prompt
 
-# set default editor
+# set default editor to emacs
 export EDITOR=emacs
+export VISUAL=$EDITOR
 
 alias em="emacs"
 
