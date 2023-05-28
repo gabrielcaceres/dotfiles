@@ -44,12 +44,12 @@ alias llt="ll -t"		# List sorted by timestamp
 alias lls="ll -S"		# List sorted by size
 # List only files/directories
 # see: https://unix.stackexchange.com/questions/1645/is-there-any-option-with-ls-command-that-i-see-only-the-directories
-alias lsd="ls -d -- */"		# Show only directories
-alias lsf="ls -p | grep -v /"	# Show only files
-alias lld="ll -d -- */"		# List only directories
-alias llf="ll | grep -v /"	# List only files
-alias lltf="llt | grep -v /"	# List only files sorted by timestamp
-alias llsf="lls | grep -v /"	# List only files sorted by size
+alias lsd="ls | grep /$"	# Show only directories
+alias lsf="ls | grep -v /$"	# Show only files
+alias lld="ll | grep /$"	# List only directories
+alias llf="ll | grep -v /$"	# List only files
+alias lltf="llt | grep -v /$"	# List only files sorted by timestamp
+alias llsf="lls | grep -v /$"	# List only files sorted by size
 
 # Ask when removing many files
 alias rm="rm -I"
