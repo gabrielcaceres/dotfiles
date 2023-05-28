@@ -44,6 +44,10 @@ alias llt="ll -t"		# List sorted by timestamp
 alias lls="ll -S"		# List sorted by size
 # List only files/directories
 # see: https://unix.stackexchange.com/questions/1645/is-there-any-option-with-ls-command-that-i-see-only-the-directories
+# Note that `-p` doesn't work on Mac, and `-d` suggestion from link
+# prduces an error if no directories are present
+# can add `2> /dev/null` to redirect error for latter.
+# Just using grep for both files and dirs
 alias lsd="ls | grep /$"	# Show only directories
 alias lsf="ls | grep -v /$"	# Show only files
 alias lld="ll | grep /$"	# List only directories
