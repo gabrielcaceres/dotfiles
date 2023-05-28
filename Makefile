@@ -1,4 +1,13 @@
+
+SHELL = /bin/bash
 DOTFILES := bashrc inputrc
 
-init:
-	echo hello world .$@.test $(DOTFILES).sh $(addsuffix .sh,$(DOTFILES))
+.PHONY: help all
+
+help:
+	echo hello world .$@.test $(HOME) $(addsuffix .sh,$(DOTFILES))
+
+all: help
+
+emacs:
+	mkdir -p $(HOME)/.emacs.d
