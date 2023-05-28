@@ -38,7 +38,8 @@ alias em="emacs"
 # -t : sort by timestamp
 alias ls="ls --color=always -F"	# Default color and label folders
 alias ll="ls -Fhgo"		# List
-alias lla="ll -A"		# List hidden
+alias la="ll -A"		# List hidden
+alias lla="la"			# List hidden
 alias llt="ll -t"		# List sorted by timestamp
 alias lls="ll -S"		# List sorted by size
 # List only files/directories
@@ -127,7 +128,20 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     # Use bash-completion, if available
     # Don't think it's necessary if installed directly using dnf?
     # [[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
-    # . /usr/share/bash-completion/bash_completion
+	# . /usr/share/bash-completion/bash_completion
+    # ### Blur background behind terminal
+    # # Konsole
+    # konsolex=$(qdbus | grep konsole | cut -f 2 -d\ )
+    # if [ -n konsolex ]; then
+    # 	for konsole in $konsolex
+    # 	do
+    # 	    xprop -f _KDE_NET_WM_BLUR_BEHIND_REGION 32c -set _KDE_NET_WM_BLUR_BEHIND_REGION 0 -id `qdbus $konsole /konsole/MainWindow_1 winId`;
+    # 	done
+    # fi
+    # # Yakuake
+    # if [ `qdbus | grep yakuake` ]; then
+    # 	xprop -f _KDE_NET_WM_BLUR_BEHIND_REGION 32c -set _KDE_NET_WM_BLUR_BEHIND_REGION 0 -name Yakuake;
+    # fi
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     # Mac OSX
     echo $OSTYPE
