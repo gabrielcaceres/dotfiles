@@ -9,7 +9,11 @@ DOTEMACS := $(addprefix $(HOME)/.emacs.d/,init.el)
 
 all: help
 
-setup: | bash emacs $(DOTFILES)
+setup: | bash link
+	@echo 'Setup repo dotfiles'
+
+link: | emacs $(DOTFILES)
+	@echo 'Linking repo dotfiles'
 
 help:
 	echo hello world .$@.test $(HOME) $(addsuffix .sh,$(DOTFILES))
@@ -28,18 +32,15 @@ endif
 emacs: | $(DOTEMACS)
 
 $(DOTEMACS):
-	@echo 'Linking repo init.el for Emacs'
+	@echo "Linking Emacs init.el"
 	@mkdir -p $(dir $@)
 	@ln -sv "$(CURDIR)/emacs/init.el" $@
 
+### Modified from: https://polothy.github.io/post/2018-10-09-makefile-dotfiles/
 ### Linking files
-# Modified from: https://polothy.github.io/post/2018-10-09-makefile-dotfiles/
-link: | $(DOTFILES)
-	@echo 'Linking repo dotfiles'
-
 $(DOTFILES):
+	@echo "Linking $(notdir $@)"
 	@ln -sv "$(CURDIR)/$(notdir $(subst .,,$@)).sh" $@
-
 # Interactively delete symbolic links.
 unlink:
 	@echo "Unlinking dotfiles"
