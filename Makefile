@@ -2,12 +2,14 @@
 SHELL = /bin/bash
 DOTFILES := bashrc inputrc
 
+.DEFAULT_GOAL := help
 .PHONY: help all
-
-help:
-	echo hello world .$@.test $(HOME) $(addsuffix .sh,$(DOTFILES))
 
 all: help
 
 emacs:
-	mkdir -p $(HOME)/.emacs.d
+	echo 'emacs'
+	# mkdir -p $(HOME)/.emacs.d
+
+help:
+	echo hello world .$@.test $(HOME) $(addsuffix .sh,$(DOTFILES))
