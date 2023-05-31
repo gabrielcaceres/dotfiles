@@ -13,7 +13,7 @@ else
 	BASHCONFIG := .bashrc
 endif
 
-LINKFILES := inputrc gitignore
+LINKFILES := inputrc gitignore Rprofile
 DOTFILES := $(addprefix $(HOME)/.,$(LINKFILES))
 DOTEMACS := $(addprefix $(HOME)/.emacs.d/,init.el)
 
@@ -25,22 +25,24 @@ all: help
 
 ## Sets up bash and links dotfiles (as needed)
 setup: | bash link
-	@echo 'Setup repo dotfiles'
+	@echo 'Completed setting up repo dotfiles'
 
 ## Links dotfiles
 link: | emacs $(DOTFILES)
-	@echo 'Linking repo dotfiles'
+	@echo 'Completed linking'
 
 ## Add line to source config into .bashrc
 bash:
 ifeq ($(wildcard $(HOME)/$(BASHCONFIG)),)
 	@echo "No $(BASHCONFIG), creating file"
-	@touch $(HOME)/$(BASHCONFIG))
+	@touch '$(HOME)/$(BASHCONFIG)'
+	echo $(wildcard '$(HOME)/$(BASHCONFIG)')
 endif
-ifeq ($(shell grep "Load .bashrc from repo" $(HOME)/$(BASHCONFIG)),)
-	@echo "Add line to source repo bashrc"
-	@echo "## Load .bashrc from repo" >> $(HOME)/$(BASHCONFIG))
-	@echo "if [ -f $(CURDIR)/bashrc.sh ]; then . $(HOME)/$(BASHCONFIG); fi" >> $(HOME)/$(BASHCONFIG))
+ifeq ($(shell grep "Load .bashrc from repo" '$(HOME)/$(BASHCONFIG)'),)
+	@echo "Add line to source repo bashrc into '$(HOME)/$(BASHCONFIG)'"
+	@echo "" >> '$(HOME)/$(BASHCONFIG)'
+	@echo "## Load .bashrc from repo" >> '$(HOME)/$(BASHCONFIG)'
+	@echo "if [ -f '$(CURDIR)/bashrc.sh' ]; then . '$(CURDIR)/bashrc.sh'; fi" >> '$(HOME)/$(BASHCONFIG)'
 endif
 
 ## Simpler command to link Emacs init file
@@ -49,7 +51,7 @@ emacs: | $(DOTEMACS)
 ## Links Emacs init file
 $(DOTEMACS):
 	@echo "Linking Emacs init.el"
-	@mkdir -p $(dir $@)
+	@mkdir -p '$(dir $@)'
 	@ln -sv "$(CURDIR)/emacs/init.el" $@
 
 
