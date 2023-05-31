@@ -1,6 +1,19 @@
 SHELL = /bin/bash
 
-LINKFILES := bashrc inputrc gitignore
+# Only assign if missing (in windows it should be an env var)
+# values: Darwin (MacOS), Linux, Windows_NT
+OS ?= $(shell uname)
+
+# Set file where bash config should go (.bashrc or .bash_profile)
+ifeq ($(OS), Darwin)
+# MacOS
+	BASHCONFIG := .bash_profile
+else
+# Linux & other systems
+	BASHCONFIG := .bashrc
+endif
+
+LINKFILES := inputrc gitignore
 DOTFILES := $(addprefix $(HOME)/.,$(LINKFILES))
 DOTEMACS := $(addprefix $(HOME)/.emacs.d/,init.el)
 
@@ -20,14 +33,14 @@ link: | emacs $(DOTFILES)
 
 ## Add line to source config into .bashrc
 bash:
-ifeq ($(wildcard $(HOME)/.bashrc),)
-	@echo "No .bashrc, creating file"
-	@touch $(HOME)/.bashrc)
+ifeq ($(wildcard $(HOME)/$(BASHCONFIG)),)
+	@echo "No $(BASHCONFIG), creating file"
+	@touch $(HOME)/$(BASHCONFIG))
 endif
-ifeq ($(shell grep "Load .bashrc from repo" $(HOME)/.bashrc),)
+ifeq ($(shell grep "Load .bashrc from repo" $(HOME)/$(BASHCONFIG)),)
 	@echo "Add line to source repo bashrc"
-	@echo "## Load .bashrc from repo" >> $(HOME)/.bashrc)
-	@echo "source ~/Repos/dotfiles/bashrc.sh" >> $(HOME)/.bashrc)
+	@echo "## Load .bashrc from repo" >> $(HOME)/$(BASHCONFIG))
+	@echo "source $(CURDIR)/bashrc.sh" >> $(HOME)/$(BASHCONFIG))
 endif
 
 ## Simpler command to link Emacs init file
