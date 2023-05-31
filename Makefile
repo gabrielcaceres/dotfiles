@@ -40,7 +40,7 @@ endif
 ifeq ($(shell grep "Load .bashrc from repo" $(HOME)/$(BASHCONFIG)),)
 	@echo "Add line to source repo bashrc"
 	@echo "## Load .bashrc from repo" >> $(HOME)/$(BASHCONFIG))
-	@echo "source $(CURDIR)/bashrc.sh" >> $(HOME)/$(BASHCONFIG))
+	@echo "if [ -f $(CURDIR)/bashrc.sh ]; then . $(HOME)/$(BASHCONFIG); fi" >> $(HOME)/$(BASHCONFIG))
 endif
 
 ## Simpler command to link Emacs init file
