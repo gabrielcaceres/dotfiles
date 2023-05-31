@@ -10,12 +10,11 @@ Fedora: `dnf install bash-completion`
 Homebrew: `brew install bash-completion@2`
 
 
-## Set up `.inputrc`
+## Set up
 
-Run the following in the terminal
-`ln -s <path/to/repo>/dotfiles/inputrc.sh ~/.inputrc`
+`make setup` will:
 
-## Set up `.bashrc`
-
-Add the following to `.bashrc`
-`source ~/Repos/dotfiles/bashrc.sh`
+- Add a line to `.bashrc` to `source` the repo script
+- Link Emacs init file
+- Link `.inputrc`
+- Link `.gitignore`
