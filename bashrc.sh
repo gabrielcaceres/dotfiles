@@ -153,3 +153,13 @@ else
     # Unknown.
     echo "Unknown OS"
 fi
+
+
+# Functions to start and stop conda virtual environments
+startenv () {
+    # Use name of current working directory as env
+    conda activate $(basename "$PWD")
+}
+stopenv () {
+    conda deactivate
+}
