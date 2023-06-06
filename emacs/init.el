@@ -116,7 +116,8 @@
 (setq inhibit-startup-screen t)
 
 ;; Theme
-(load-theme 'tango-dark)
+;; Options I like: "misterioso", "tango-dark"
+(load-theme 'misterioso)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Editing config
