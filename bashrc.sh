@@ -157,8 +157,8 @@ fi
 
 # Functions to start and stop conda virtual environments
 startenv () {
-    # Use name of current working directory as env
-    conda activate $(basename "$PWD")
+    # Use name of git root directory as target env
+    conda activate $(basename "$(git rev-parse --show-toplevel)")
 }
 stopenv () {
     conda deactivate
