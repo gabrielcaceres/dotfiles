@@ -99,7 +99,7 @@
  ((find-font (font-spec :name "Inconsolata"))
   (set-frame-font "Inconsolata-14:weight=regular"))
  ((find-font (font-spec :name "Source Code Pro"))
-  (set-frame-font "Source Code Pro-14:weight=regular"))
+  (set-frame-font "Source Code Pro-12:weight=regular"))
  ((find-font (font-spec :name "Anonymous Pro"))
   (set-frame-font "Anonymous Pro-14"))
  )
@@ -212,3 +212,36 @@
 ;; track recent files
 ;; (recentf-mode 1)
 
+(use-package flyspell
+  :disabled
+  :hook ((prog-mode . flyspell-prog-mode)
+	 (text-mode . flyspell-mode))
+  )
+
+(use-package display-line-numbers
+  :disabled
+  :hook (prog-mode . display-line-numbers-mode)
+  )
+
+(use-package highlight-indent-guides
+  ;; https://github.com/DarthFennec/highlight-indent-guides
+  :disabled
+  :hook (prog-mode . highlight-indent-guides-mode)
+  :config
+  (setq highlight-indent-guides-method 'character)
+  )
+
+;; Syntax checking
+(use-package flymake-diagnostic-at-point
+  :disabled
+  :after flymake
+  :config
+  (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode)
+  ;; (setq flymake-diagnostic-at-point-timer-delay 0.7)
+  )
+
+(use-package electric-operator
+  ;; https://github.com/davidshepherd7/electric-operator
+  :disabled
+  :hook (ess-r-mode. electric-operator-mode)
+  )
