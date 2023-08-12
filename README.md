@@ -18,3 +18,4 @@ Homebrew: `brew install bash-completion@2`
 - Link Emacs init file
 - Link `.inputrc`
 - Link `.gitignore`
+- Link `.Rprofile`

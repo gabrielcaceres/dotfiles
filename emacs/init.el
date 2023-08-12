@@ -71,6 +71,7 @@
 
 
 ;; ;; iterm2 emacs mouse support
+;; https://www.emacswiki.org/emacs/iTerm2#h5o-6
 ;; (unless window-system
 ;;   (require 'mouse)
 ;;   (xterm-mouse-mode t)
@@ -83,14 +84,25 @@
 ;;; Display config
 
 ;; Set default Emacs frame size
-(setq default-frame-alist '((width . 94) (height . 50)))
+(setq default-frame-alist '((width . 105) (height . 50)))
 
 ;; Set default font
-;; (add-to-list 'default-frame-alist '(font . "Monospace-10"))
+;; (add-to-list 'default-frame-alist '(font . "Monospace-12"))
 ;; (add-to-list 'default-frame-alist '(font . "Droid Sans Mono-12" ))
 ;; (add-to-list 'default-frame-alist '(font . "Anonymous Pro-14" ))
 ;; (add-to-list 'default-frame-alist '(font . "Source Code Pro-16:weight=regular" ))
-;; (add-to-list 'default-frame-alist '(font . "Inconsolata-17:weight=regular:width=semicondensed" ))
+;; (add-to-list 'default-frame-alist '(font . "Inconsolata-14:weight=regular" ))
+;; (add-to-list 'default-frame-alist '(font . "Monaco-14"))
+(cond 
+ ((find-font (font-spec :name "Monaco"))
+  (set-frame-font "Monaco-14"))
+ ((find-font (font-spec :name "Inconsolata"))
+  (set-frame-font "Inconsolata-14:weight=regular"))
+ ((find-font (font-spec :name "Source Code Pro"))
+  (set-frame-font "Source Code Pro-14:weight=regular"))
+ ((find-font (font-spec :name "Anonymous Pro"))
+  (set-frame-font "Anonymous Pro-14"))
+ )
 
 ;; Increase line spacing
 (setq-default line-spacing 2)
@@ -125,13 +137,14 @@
 ;;* Delete highlighted text when typing
 (delete-selection-mode t)
 
+;; Is this still necessary?? seems to work without...
 ;;* Highlight matching parentheses
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Matching.html
 ;; (show-paren-mode t)
 
 ;;* Show line number on left side of window
 ;; use "display-line-number-mode' instead; see package below
-;; (global-display-line-numbers-mode)
+(global-display-line-numbers-mode)
 
 ;; Use "command key" to move between windows in frame
 (windmove-default-keybindings 'super)
@@ -179,6 +192,8 @@
 ;; DocView resolution
 (setq doc-view-resolution 300)
 
+;; Revert buffers when the underlying file had changed
+(global-auto-revert-mode 1)
 
 ;;;;;;; Conda settings?? old so not sure if they work
 ;; (setenv "WORKON_HOME" (concat (getenv "CONDA_PREFIX") "/envs"))
@@ -196,7 +211,4 @@
 
 ;; track recent files
 ;; (recentf-mode 1)
-
-;; Revert buffers when the underlying file had changed
-;; (global-auto-revert-mode 1)
 
