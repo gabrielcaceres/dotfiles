@@ -26,8 +26,8 @@
 (eval-when-compile
   (require 'use-package))
 
-;; ;; To install any missing packages
-;; (setq use-package-always-ensure t)
+;; ;; To install any missing packages 
+(setq use-package-always-ensure t)
 
 ;; ;; Automatically update packages using use-package
 ;; (use-package auto-package-update
@@ -82,6 +82,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Display config
+
+(require 'color)
 
 ;; Set default Emacs frame size
 (setq default-frame-alist '((width . 105) (height . 50)))
@@ -142,10 +144,6 @@
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Matching.html
 ;; (show-paren-mode t)
 
-;;* Show line number on left side of window
-;; use "display-line-number-mode' instead; see package below
-(global-display-line-numbers-mode)
-
 ;; Use "command key" to move between windows in frame
 (windmove-default-keybindings 'super)
 
@@ -171,7 +169,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; GLOBAL CONFIG
-
 
 (use-package tramp
   :ensure nil
@@ -213,15 +210,202 @@
 ;; (recentf-mode 1)
 
 (use-package flyspell
-  :disabled
+  ;; :disabled
   :hook ((prog-mode . flyspell-prog-mode)
 	 (text-mode . flyspell-mode))
   )
 
-(use-package display-line-numbers
-  :disabled
-  :hook (prog-mode . display-line-numbers-mode)
+(use-package hl-line
+  ;; :disabled
+  :hook (prog-mode . hl-line-mode)
+  :custom-face
+  ;; (hl-line ((t (:inherit nil :background "#3e4446"))))
+  ;; (hl-line ((t (:foreground nil :background (color-darken-name "#3e4446" 4)))))
+  (hl-line ((t (:inherit nil :background ,(color-lighten-name (face-attribute 'default :background) 5) ))))
   )
+
+;; Show lines numbers on left side of frame
+(use-package display-line-numbers
+  ;; :disabled
+  ;; :after hl-line
+  :hook (prog-mode . display-line-numbers-mode)
+  :custom-face                          ;Customize line number colors
+  (line-number
+   ((t (:inherit shadow
+                 :foreground ,(color-darken-name (face-attribute 'shadow :foreground) 22)
+                 ;; :background ,(color-darken-name (face-attribute 'default :background) 2)
+                 )))) 
+  (line-number-current-line
+   ((t (:inherit hl-line
+                 :foreground ,(color-lighten-name (face-attribute 'shadow :foreground) 2)
+                 ;; :background ,(color-lighten-name (face-attribute 'default :background) 4)
+                 )))) 
+  )
+
+(use-package smartparens
+  ;; :init
+  ;; (bind-key "C-M-f" #'sp-forward-sexp smartparens-mode-map)
+  ;; (bind-key "C-M-b" #'sp-backward-sexp smartparens-mode-map)
+  ;; (bind-key "C-)" #'sp-forward-slurp-sexp smartparens-mode-map)
+  ;; (bind-key "C-(" #'sp-backward-slurp-sexp smartparens-mode-map)
+  ;; (bind-key "M-)" #'sp-forward-barf-sexp smartparens-mode-map)
+  ;; (bind-key "M-(" #'sp-backward-barf-sexp smartparens-mode-map)
+  ;; (bind-key "C-S-s" #'sp-splice-sexp)
+  ;; (bind-key "C-M-<backspace>" #'backward-kill-sexp)
+  ;; (bind-key "C-M-S-<SPC>" (lambda () (interactive) (mark-sexp -1)))
+
+  :config
+  (smartparens-global-mode t)
+
+  (setq sp-highlight-pair-overlay nil)
+
+  ;; (sp-local-pair 'poly-r-sql-mode "/* Start SQL Query */" "/* End SQL Query */"
+  ;;       	 :trigger "\\sql")
+  )
+
+(use-package rainbow-delimiters-mode
+  ;; https://github.com/Fanael/rainbow-delimiters
+  ;; :disabled
+  :ensure rainbow-delimiters
+  :hook (prog-mode inferior-ess-mode)
+  :init
+  ;; (custom-set-faces
+  ;;  '(rainbow-delimiters-depth-1-face ((t (:foreground "dark orange"))))
+  ;;  '(rainbow-delimiters-depth-2-face ((t (:foreground "deep pink"))))
+  ;;  '(rainbow-delimiters-depth-3-face ((t (:foreground "chartreuse"))))
+  ;;  '(rainbow-delimiters-depth-4-face ((t (:foreground "deep sky blue"))))
+  ;;  '(rainbow-delimiters-depth-5-face ((t (:foreground "yellow"))))
+  ;;  '(rainbow-delimiters-depth-6-face ((t (:foreground "orchid"))))
+  ;;  '(rainbow-delimiters-depth-7-face ((t (:foreground "spring green"))))
+  ;;  '(rainbow-delimiters-depth-8-face ((t (:foreground "sienna1")))))
+  ;; rainbow-delimiters
+  ;;
+  ;; ZENBURN THEME
+  ;; (setq rainbow-delimiters-max-face-count 8)
+  (let ( (zenburn-fg		"#dcdccc")
+       (zenburn-bg-1		"#2b2b2b")
+       (zenburn-bg		"#3f3f3f")
+       (zenburn-bg+1		"#4f4f4f")
+       (zenburn-bg+2		"#5f5f5f")
+       (zenburn-red+1		"#dca3a3")
+       (zenburn-red		"#cc9393")
+       (zenburn-red-1		"#bc8383")
+       (zenburn-red-2		"#ac7373")
+       (zenburn-red-3		"#9c6363")
+       (zenburn-red-4		"#8c5353")
+       (zenburn-orange		"#dfaf8f")
+       (zenburn-yellow		"#f0dfaf")
+       (zenburn-yellow-1	"#e0cf9f")
+       (zenburn-yellow-2	"#d0bf8f")
+       ;; 
+       (zenburn-green-4         "#2e3330")
+       (zenburn-green-1		"#5f7f5f")
+       (zenburn-green		"#7f9f7f")
+       (zenburn-green+1		"#8fb28f")
+       (zenburn-green+2		"#9fc59f")
+       (zenburn-green+3		"#afd8af")
+       (zenburn-green+4		"#bfebbf")
+       (zenburn-cyan		"#93e0e3")
+       (zenburn-blue+1		"#94bff3")
+       (zenburn-blue		"#8cd0d3")
+       (zenburn-blue-1		"#7cb8bb")
+       (zenburn-blue-2		"#6ca0a3")
+       (zenburn-blue-3		"#5c888b")
+       (zenburn-blue-4		"#4c7073")
+       (zenburn-blue-5		"#366060")
+       (zenburn-magenta		"#dc8cc3"))
+    ;; 
+    ;; (custom-set-faces
+    ;;  ;; `(rainbow-delimiters-depth-1-face "orange")
+    ;;  `(rainbow-delimiters-depth-1-face ((t (:foreground ,zenburn-cyan))))
+    ;;  `(rainbow-delimiters-depth-2-face ((t (:foreground ,zenburn-yellow))))
+    ;;  `(rainbow-delimiters-depth-3-face ((t (:foreground ,zenburn-blue+1))))
+    ;;  `(rainbow-delimiters-depth-4-face ((t (:foreground ,zenburn-red+1))))
+    ;;  `(rainbow-delimiters-depth-5-face ((t (:foreground ,zenburn-green+1))))
+    ;;  `(rainbow-delimiters-depth-6-face ((t (:foreground ,zenburn-blue-1))))
+    ;;  `(rainbow-delimiters-depth-7-face ((t (:foreground ,zenburn-orange))))
+    ;;  `(rainbow-delimiters-depth-8-face ((t (:foreground ,zenburn-magenta))))
+    ;;  `(rainbow-delimiters-depth-9-face ((t (:foreground ,zenburn-yellow-2))))
+    ;;  `(rainbow-delimiters-depth-10-face ((t (:foreground ,zenburn-green+2))))
+    ;;  `(rainbow-delimiters-depth-11-face ((t (:foreground ,zenburn-blue+1))))
+    ;;  `(rainbow-delimiters-depth-12-face ((t (:foreground ,zenburn-red-4))))
+    ;;  )
+    (custom-set-faces
+     ;; `(rainbow-delimiters-depth-1-face "orange")
+     `(rainbow-delimiters-depth-1-face ((t (:foreground ,zenburn-blue-1))))
+     `(rainbow-delimiters-depth-2-face ((t (:foreground ,zenburn-orange))))
+     `(rainbow-delimiters-depth-3-face ((t (:foreground ,zenburn-green+3))))
+     `(rainbow-delimiters-depth-4-face ((t (:foreground ,zenburn-magenta))))
+     `(rainbow-delimiters-depth-5-face ((t (:foreground ,zenburn-blue+1))))
+     `(rainbow-delimiters-depth-6-face ((t (:foreground ,zenburn-cyan))))
+     `(rainbow-delimiters-depth-7-face ((t (:foreground ,zenburn-red+1))))
+     `(rainbow-delimiters-depth-8-face ((t (:foreground ,zenburn-green+4))))
+     `(rainbow-delimiters-depth-9-face ((t (:foreground ,zenburn-yellow))))
+     `(rainbow-delimiters-depth-10-face ((t (:foreground ,zenburn-green+1))))
+     `(rainbow-delimiters-depth-11-face ((t (:foreground ,zenburn-green+2))))
+     `(rainbow-delimiters-depth-12-face ((t (:foreground ,zenburn-blue+1))))
+     )
+    )
+  )
+
+(use-package conda
+  ;; https://github.com/necaris/conda.el
+  ;; :disabled
+  :config
+  (custom-set-variables
+   '(conda-anaconda-home "/Users/Gabe.Caceres/miniforge3"))
+  (setq python-shell-interpreter "ipython3")
+  (setq python-shell-interpreter-args "-i --simple-prompt -c \"autoreload 2\"")
+  ;; if you want interactive shell support, include:
+  (conda-env-initialize-interactive-shells)
+  ;; if you want eshell support, include:
+  (conda-env-initialize-eshell)
+  ;; if you want auto-activation (see below for details), include:
+  (conda-env-autoactivate-mode t)
+  ;; ;; if you want to automatically activate a conda environment on the opening of a file:
+  ;; (add-to-hook 'find-file-hook (lambda () (when (bound-and-true-p conda-project-env-path)
+                                            ;; (conda-env-activate-for-buffer))))
+  )
+
+(use-package company
+  ;; :disabled
+  ;; :bind
+  ;; ("TAB" . company-indent-or-complete-common)
+  :config
+  (setq company-minimum-prefix-length 2
+        company-idle-delay 0.3
+        ;; company-quickhelp-delay 0.0
+        )
+  ;; set default `company-backends'
+  (setq company-backends
+        '((company-files               ; files & directory
+           company-keywords            ; keywords
+           company-capf                ; completion-at-point-functions
+           company-dabbrev-code
+           company-etags
+           company-dabbrev)))
+  ;; (company-show-numbers t)
+  ;; (company-tooltip-align-annotations 't)
+  (global-company-mode t)
+  )
+
+(use-package anaconda-mode
+  ;; :disabled
+  ;; :bind (("C-c C-x" . next-error))
+  :hook (python-mode . anaconda-mode)
+  :config
+  )
+
+(use-package company-anaconda
+  ;; :disabled
+  :after (anaconda-mode company)
+  :config
+  (eval-after-load "company"
+    '(add-to-list 'company-backends 'company-anaconda))
+  ;; (eval-after-load "company"
+  ;;   '(add-to-list 'company-backends '(company-anaconda :with company-capf)))
+  )
+
 
 (use-package highlight-indent-guides
   ;; https://github.com/DarthFennec/highlight-indent-guides
