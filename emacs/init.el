@@ -348,12 +348,31 @@
     )
   )
 
+
+(cond 
+ ((find-font (font-spec :name "Monaco"))
+  (set-frame-font "Monaco-14"))
+ ((find-font (font-spec :name "Inconsolata"))
+  (set-frame-font "Inconsolata-14:weight=regular"))
+ ((find-font (font-spec :name "Source Code Pro"))
+  (set-frame-font "Source Code Pro-12:weight=regular"))
+ ((find-font (font-spec :name "Anonymous Pro"))
+  (set-frame-font "Anonymous Pro-14"))
+ )
+
 (use-package conda
   ;; https://github.com/necaris/conda.el
   ;; :disabled
   :config
   (custom-set-variables
-   '(conda-anaconda-home "/Users/Gabe.Caceres/miniforge3"))
+   (cond
+    ;; Work
+    ((file-directory-p "/Users/Gabe.Caceres/miniforge3")
+     '(conda-anaconda-home "/Users/Gabe.Caceres/miniforge3"))
+    ;; Personal laptop
+    ((file-directory-p "/home/gcaceres/mambaforge")
+     '(conda-anaconda-home "/home/gcaceres/mambaforge"))
+    ))
   (setq python-shell-interpreter "ipython3")
   (setq python-shell-interpreter-args "-i --simple-prompt -c \"autoreload 2\"")
   ;; if you want interactive shell support, include:
