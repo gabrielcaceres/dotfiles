@@ -62,35 +62,35 @@ alias rm="rm -I"
 alias wcl="wc -l"
 
 
-# function h () {
-#     if [[ $# -eq 2 ]]
-#     then
-#         head -n $1 $2
-#     else
-#         head -n 5 $1
-#     fi
-# }
-# function t () {
-#     if [[ $# -eq 2 ]]
-#     then
-#         tail -n $1 $2
+function h () {
+    if [[ $# -eq 2 ]]
+    then
+        head -n $1 $2
+    else
+        head -n 5 $1
+    fi
+}
+function t () {
+    if [[ $# -eq 2 ]]
+    then
+        tail -n $1 $2
         
-#     else
-#         tail -n 5 $1
-#     fi
-# }
-# function ht () {
-#     if [[ $# -eq 2 ]]
-#     then
-#         head -n $1 $2
-#         echo "---------------"
-#         tail -n $1 $2
-#     else
-#         head -n 5 $1
-#         echo "---------------"
-#         tail -n 5 $1
-#     fi
-# }
+    else
+        tail -n 5 $1
+    fi
+}
+function ht () {
+    if [[ $# -eq 2 ]]
+    then
+        head -n $1 $2
+        echo "---------------"
+        tail -n $1 $2
+    else
+        head -n 5 $1
+        echo "---------------"
+        tail -n 5 $1
+    fi
+}
 
 
 # # Homebrew autocompletion
@@ -128,7 +128,7 @@ alias wcl="wc -l"
 # Linux
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     # https://github.com/magicmonty/bash-git-prompt
-    if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
+    if [[ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]]; then
         # GIT_PROMPT_ONLY_IN_REPO=1
         source $HOME/.bash-git-prompt/gitprompt.sh
     fi
