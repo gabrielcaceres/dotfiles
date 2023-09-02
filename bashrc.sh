@@ -179,3 +179,25 @@ cdgit () {
     if [[ -z $(cur_git_root) ]]; then echo "Not in a git directory"; fi
     cd "$(cur_git_root)"
 }
+
+# Give warnings if trying to install where likely shouldn't (e.g. base
+# environment or env name that doesn't match git root dir)
+safe_install () {
+    if [[ "$2" = "install" && ("CONDA_SHLVL" == 0 || -z "$CONDA_DEFAULT_ENV") ]]; then
+        # When installing check if either the conda level is zero or the env name is blank
+        echo "Don't install! Conda environment not active!"
+    elif [[  "$2" = "install" && "$CONDA_DEFAULT_ENV" == "base" ]]; then
+        # When installing check if current env is 'base'
+        echo "Don't install! Currently in base environment!"
+    elif [[ "$2" = "install" && ! -z $(cur_git_root) && "$CONDA_DEFAULT_ENV" != $(basename "$(cur_git_root)") ]]; then
+        # When installing and in a repo, check env matches repo root dir
+        echo "Don't install! Environment name and git root don't match!"
+    else
+        # Else run command as normal
+        $@
+    fi
+}
+# Alias safe_install to relevant programs
+alias conda="safe_install conda"
+alias mamba="safe_install mamba"
+alias pip="safe_install pip"
