@@ -167,6 +167,7 @@ cur_git_root () {
 # Convenience functions to start and stop conda virtual environments
 # using name of git root directory as target env
 startenv () {
+    if [[ -z $(cur_git_root) ]]; then echo "Not in a git directory"; fi
     conda activate $(basename "$(cur_git_root)")
 }
 stopenv () {
@@ -175,5 +176,6 @@ stopenv () {
 
 # cd to git root directory
 cdgit () {
+    if [[ -z $(cur_git_root) ]]; then echo "Not in a git directory"; fi
     cd "$(cur_git_root)"
 }
