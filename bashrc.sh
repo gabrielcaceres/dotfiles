@@ -159,16 +159,21 @@ else
     echo "Unknown OS"
 fi
 
+# Get current git root directory, otherwise return nothing
+cur_git_root () {
+    git rev-parse --show-toplevel 2> /dev/null
+}
 
-# Functions to start and stop conda virtual environments
+# Convenience functions to start and stop conda virtual environments
+# using name of git root directory as target env
 startenv () {
-    # Use name of git root directory as target env
-    conda activate $(basename "$(git rev-parse --show-toplevel)")
+    conda activate $(basename "$(cur_git_root)")
 }
 stopenv () {
     conda deactivate
 }
 
+# cd to git root directory
 cdgit () {
-    cd "$(git rev-parse --show-toplevel)"
+    cd "$(cur_git_root)"
 }
