@@ -365,13 +365,11 @@
   ;; :disabled
   :config
   (custom-set-variables
-   (cond
-    ;; Work
-    ((file-directory-p "/Users/Gabe.Caceres/miniforge3")
-     '(conda-anaconda-home "/Users/Gabe.Caceres/miniforge3"))
-    ;; Personal laptop
-    ((file-directory-p "/home/gcaceres/mambaforge")
-     '(conda-anaconda-home "/home/gcaceres/mambaforge"))
+   (cond                                ;Search possible conda locations
+    ((file-directory-p "~/miniforge3")
+     '(conda-anaconda-home "~/miniforge3"))
+    ((file-directory-p "~/mambaforge")
+     '(conda-anaconda-home "~/mambaforge"))
     ))
   (setq python-shell-interpreter "ipython3")
   (setq python-shell-interpreter-args "-i --simple-prompt -c \"autoreload 2\"")
