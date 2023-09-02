@@ -371,8 +371,9 @@
     ((file-directory-p "~/mambaforge")
      '(conda-anaconda-home "~/mambaforge"))
     ))
+  (add-to-list 'python-shell-completion-native-disabled-interpreters "ipython")
   (setq python-shell-interpreter "ipython3")
-  (setq python-shell-interpreter-args "-i --simple-prompt -c \"autoreload 2\"")
+  (setq python-shell-interpreter-args "-i --simple-prompt -c \"%load_ext autoreload \n%autoreload 2\"")
   ;; if you want interactive shell support, include:
   (conda-env-initialize-interactive-shells)
   ;; if you want eshell support, include:
