@@ -186,12 +186,15 @@ safe_install () {
     if [[ "$2" = "install" && ("CONDA_SHLVL" == 0 || -z "$CONDA_DEFAULT_ENV") ]]; then
         # When installing check if either the conda level is zero or the env name is blank
         echo "Don't install! Conda environment not active!"
+        echo "(Run command with a backslash to override alias)"
     elif [[  "$2" = "install" && "$CONDA_DEFAULT_ENV" == "base" ]]; then
         # When installing check if current env is 'base'
         echo "Don't install! Currently in base environment!"
+        echo "(Run command with a backslash to override alias)"
     elif [[ "$2" = "install" && ! -z $(cur_git_root) && "$CONDA_DEFAULT_ENV" != $(basename "$(cur_git_root)") ]]; then
         # When installing and in a repo, check env matches repo root dir
         echo "Don't install! Environment name and git root don't match!"
+        echo "(Run command with a backslash to override alias)"
     else
         # Else run command as normal
         $@
