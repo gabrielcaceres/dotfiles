@@ -424,6 +424,13 @@
   ;;   '(add-to-list 'company-backends '(company-anaconda :with company-capf)))
   )
 
+(use-package numpydoc
+  :ensure t
+  :bind (:map python-mode-map
+              ("C-c C-n" . numpydoc-generate))
+  :config
+  ;; (setq numpydoc-insertion-style 'yas)
+  )
 
 (use-package highlight-indent-guides
   ;; https://github.com/DarthFennec/highlight-indent-guides
