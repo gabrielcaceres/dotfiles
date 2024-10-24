@@ -175,8 +175,11 @@ cur_git_root () {
 # Convenience functions to start and stop conda virtual environments
 # using name of git root directory as target env
 startenv () {
-    if [[ -z $(cur_git_root) ]]; then echo "Not in a git directory"; fi
-    conda activate $(basename "$(cur_git_root)")
+    if [[ -z $(cur_git_root) ]]; then
+        echo "Not in a git directory"
+    else
+        conda activate $(basename "$(cur_git_root)")
+    fi
 }
 stopenv () {
     conda deactivate
@@ -184,8 +187,11 @@ stopenv () {
 
 # cd to git root directory
 cdgit () {
-    if [[ -z $(cur_git_root) ]]; then echo "Not in a git directory"; fi
-    cd "$(cur_git_root)"
+    if [[ -z $(cur_git_root) ]]; then
+        echo "Not in a git directory"
+    else
+        cd "$(cur_git_root)"
+    fi
 }
 
 # Give warnings if trying to install where likely shouldn't (e.g. base
@@ -209,6 +215,6 @@ safe_install () {
     fi
 }
 # Alias safe_install to relevant programs
-alias conda="safe_install conda"
-alias mamba="safe_install mamba"
-alias pip="safe_install pip"
+alias conda="safe_install \conda"
+alias mamba="safe_install \mamba"
+alias pip="safe_install \pip"
