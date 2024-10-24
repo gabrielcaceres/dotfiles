@@ -48,12 +48,15 @@ alias lls="ll -S"		# List sorted by size
 # prduces an error if no directories are present
 # can add `2> /dev/null` to redirect error for latter.
 # Just using grep for both files and dirs
-alias lsd="ls | grep /$"	# Show only directories
-alias lsf="ls | grep -v /$"	# Show only files
-alias lld="ll | grep /$"	# List only directories
-alias llf="ll | grep -v /$"	# List only files
-alias lltf="llt | grep -v /$"	# List only files sorted by timestamp
-alias llsf="lls | grep -v /$"	# List only files sorted by size
+alias lsd="ls | \grep /$"	# Show only directories
+alias lsf="ls | \grep -v /$"	# Show only files
+alias lld="ll | \grep /$"	# List only directories
+alias llf="ll | \grep -v /$"	# List only files
+alias lltf="llt | \grep -v /$"	# List only files sorted by timestamp
+alias llsf="lls | \grep -v /$"	# List only files sorted by size
+
+# Always highlight grep search term
+alias grep='grep --color=auto'
 
 # Ask when removing many files
 alias rm="rm -I"
