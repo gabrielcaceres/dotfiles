@@ -172,22 +172,30 @@ cur_git_root () {
     git rev-parse --show-toplevel 2> /dev/null
 }
 
+check_in_conda_env_list () {
+    \conda env list | grep "/$1$"
+}
+
 # Convenience functions to start and stop conda virtual environments
 # using name of git root directory as target env
 startenv () {
-    if [[ -z $(cur_git_root) ]]; then
+    if [[ -z "$(cur_git_root)" ]]; then
         echo "Not in a git directory"
     else
-        conda activate $(basename "$(cur_git_root)")
+        if [[ "$CONDA_SHLVL" > 1 ]]; then
+            # Avoid stacking envs
+            \conda deactivate
+        fi
+        \conda activate $(basename "$(cur_git_root)")
     fi
 }
 stopenv () {
-    conda deactivate
+    \conda deactivate
 }
 
 # cd to git root directory
 cdgit () {
-    if [[ -z $(cur_git_root) ]]; then
+    if [[ -z "$(cur_git_root)" ]]; then
         echo "Not in a git directory"
     else
         cd "$(cur_git_root)"
@@ -197,7 +205,7 @@ cdgit () {
 # Give warnings if trying to install where likely shouldn't (e.g. base
 # environment or env name that doesn't match git root dir)
 safe_install () {
-    if [[ "$2" = "install" && ("CONDA_SHLVL" == 0 || -z "$CONDA_DEFAULT_ENV") ]]; then
+    if [[ "$2" = "install" && ("$CONDA_SHLVL" == 0 || -z "$CONDA_DEFAULT_ENV") ]]; then
         # When installing check if either the conda level is zero or the env name is blank
         echo "Don't install! Conda environment not active!"
         echo "(Run command with a backslash to override alias)"
@@ -205,7 +213,7 @@ safe_install () {
         # When installing check if current env is 'base'
         echo "Don't install! Currently in base environment!"
         echo "(Run command with a backslash to override alias)"
-    elif [[ "$2" = "install" && ! -z $(cur_git_root) && "$CONDA_DEFAULT_ENV" != $(basename "$(cur_git_root)") ]]; then
+    elif [[ "$2" = "install" && ! -z "$(cur_git_root)" && "$CONDA_DEFAULT_ENV" != $(basename "$(cur_git_root)") ]]; then
         # When installing and in a repo, check env matches repo root dir
         echo "Don't install! Environment name and git root don't match!"
         echo "(Run command with a backslash to override alias)"
