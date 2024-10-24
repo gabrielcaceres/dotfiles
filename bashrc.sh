@@ -187,24 +187,40 @@ cdgit () {
 
 ##### Virtual environment related functions (using conda)
 check_in_conda_env_list () {
-    \conda env list | grep "/$1$"
+    conda env list | grep "/$1$"
+}
+
+venv_list () {
+    conda env list
 }
 
 # Convenience functions to start and stop conda virtual environments
 # using name of git root directory as target env
-startenv () {
-    if [[ -z "$(cur_git_root)" ]]; then
-        echo "Not in a git directory"
+venv_on () {
+    local venv_name
+    if [[ -n "$1" ]]; then
+        # If argument given, use that as name for venv
+        venv_name=$1
+    elif [[ -n "$(cur_git_root)" ]]; then
+        # Else use name of git repo
+        venv_name=$(basename "$(cur_git_root)")
+    else
+        # Else use current directory name
+        venv_name=$(basename "$PWD")
+    fi
+    if [[ -z  "$(check_in_conda_env_list $venv_name)" ]]; then
+        echo "No virtual environment named \"$venv_name\""
     else
         if [[ "$CONDA_SHLVL" > 1 ]]; then
             # Avoid stacking envs
-            \conda deactivate
+            echo "Turning \"$CONDA_DEFAULT_ENV\" off before starting \"$venv_name\""
+            conda deactivate
         fi
-        \conda activate $(basename "$(cur_git_root)")
+        conda activate $(basename "$venv_name")
     fi
 }
-stopenv () {
-    \conda deactivate
+venv_off () {
+    conda deactivate
 }
 
 
@@ -219,7 +235,7 @@ safe_install () {
         # When installing check if current env is 'base'
         echo "Don't install! Currently in base environment!"
         echo "(Run command with a backslash to override alias)"
-    elif [[ "$2" = "install" && ! -z "$(cur_git_root)" && "$CONDA_DEFAULT_ENV" != $(basename "$(cur_git_root)") ]]; then
+    elif [[ "$2" = "install" && -n "$(cur_git_root)" && "$CONDA_DEFAULT_ENV" != $(basename "$(cur_git_root)") ]]; then
         # When installing and in a repo, check env matches repo root dir
         echo "Don't install! Environment name and git root don't match!"
         echo "(Run command with a backslash to override alias)"
