@@ -167,11 +167,25 @@ else
     echo "Unknown OS"
 fi
 
+
+##### Git related functions
+
 # Get current git root directory, otherwise return nothing
 cur_git_root () {
     git rev-parse --show-toplevel 2> /dev/null
 }
 
+# cd to git root directory
+cdgit () {
+    if [[ -z "$(cur_git_root)" ]]; then
+        echo "Not in a git directory"
+    else
+        cd "$(cur_git_root)"
+    fi
+}
+
+
+##### Virtual environment related functions (using conda)
 check_in_conda_env_list () {
     \conda env list | grep "/$1$"
 }
@@ -193,14 +207,6 @@ stopenv () {
     \conda deactivate
 }
 
-# cd to git root directory
-cdgit () {
-    if [[ -z "$(cur_git_root)" ]]; then
-        echo "Not in a git directory"
-    else
-        cd "$(cur_git_root)"
-    fi
-}
 
 # Give warnings if trying to install where likely shouldn't (e.g. base
 # environment or env name that doesn't match git root dir)
